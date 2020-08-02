@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on A Hugo Site</title>
+    <link>http://toulzx.github.io/posts/</link>
+    <description>Recent content in Posts on A Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This is a customized copyright.</copyright>
+    
+	<atom:link href="http://toulzx.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>我来看看posts这个文件夹显示在哪里阿</title>
+      <link>http://toulzx.github.io/posts/post2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://toulzx.github.io/posts/post2/</guid>
+      <description>当当当当！~
+走过路过看过来阿~
+啊啊啊啊啊啊哈哈哈哈哈
+好好 冲！</description>
+    </item>
+    
+    <item>
+      <title>重建一号文</title>
+      <link>http://toulzx.github.io/posts/post1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://toulzx.github.io/posts/post1/</guid>
+      <description>我
+来
+拉
+！</description>
+    </item>
+    
+  </channel>
+</rss>
