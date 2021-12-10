@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="&quot;referrer&quot; content"><meta><title>GUIDE TO UNIX AND LINUX - tou&#039;s Website</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="tou&#039;s Website"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="tou&#039;s Website"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="本文是一篇读书笔记，主要介绍了 Linux 诞生的相关背景，以及一点点的 Linux 初步使用。我选择性忽略了原书一部分内容，将我认为重要的部分摘录于此。本读书笔记适合有一定 Linux 基础的朋友参考。"><meta property="og:type" content="article"><meta property="og:title" content="GUIDE TO UNIX AND LINUX"><meta property="og:url" content="http://www.toulzx.top/2021/12/10/guide_to_unix_and_linux/"><meta property="og:site_name" content="tou&#039;s Website"><meta property="og:description" content="本文是一篇读书笔记，主要介绍了 Linux 诞生的相关背景，以及一点点的 Linux 初步使用。我选择性忽略了原书一部分内容，将我认为重要的部分摘录于此。本读书笔记适合有一定 Linux 基础的朋友参考。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638760399749-c4764872-05e4-48e2-b9f7-a0639754f6bf.png#clientId=u46d716d3-dfa1-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;height=186&amp;id=u80c2a6ae&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=321&amp;originWidth=704&amp;originalType=binary%E2%88%B6=1&amp;rotation=0&amp;showTitle=false&amp;size=97560&amp;status=done&amp;style=none&amp;taskId=u9b7311f8-25eb-47a7-b3ac-e2a072b3344&amp;title=&amp;width=407"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638760421080-641b1d21-2afc-482b-b64d-1c3518352e42.png#clientId=u46d716d3-dfa1-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;height=216&amp;id=u11a4c6cb&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=348&amp;originWidth=660&amp;originalType=binary%E2%88%B6=1&amp;rotation=0&amp;showTitle=false&amp;size=114969&amp;status=done&amp;style=none&amp;taskId=ua75483dc-0286-4e09-b7de-1d0e0d4f4eb&amp;title=&amp;width=409"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638795550828-579470db-6dd3-4531-8005-7f658d57a460.png#clientId=uc68c5472-bfd1-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;height=193&amp;id=u43756c77&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=193&amp;originWidth=436&amp;originalType=binary%E2%88%B6=1&amp;rotation=0&amp;showTitle=false&amp;size=2832&amp;status=done&amp;style=none&amp;taskId=u71845eeb-cdb3-46bf-8e62-73d2dc98faf&amp;title=&amp;width=436"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638795584161-0c483ff2-13e6-4a34-9850-264bd807f848.png#clientId=uc68c5472-bfd1-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;height=213&amp;id=u0ea24b0c&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=213&amp;originWidth=571&amp;originalType=binary%E2%88%B6=1&amp;rotation=0&amp;showTitle=false&amp;size=4224&amp;status=done&amp;style=none&amp;taskId=ubd271485-4f32-4013-9747-39c5140d41c&amp;title=&amp;width=571"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638795725944-0c1ad486-5e87-46fc-a5cd-dac702c71134.png#clientId=uc68c5472-bfd1-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;height=182&amp;id=uca7dad88&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=182&amp;originWidth=587&amp;originalType=binary%E2%88%B6=1&amp;rotation=0&amp;showTitle=false&amp;size=5106&amp;status=done&amp;style=none&amp;taskId=u8858d6a1-b7a2-4b00-a782-9b6104fca18&amp;title=&amp;width=587"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638798736628-29f19abe-4d79-4190-a264-857c4445ef21.png#clientId=uc68c5472-bfd1-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;height=148&amp;id=ub9a6713e&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=148&amp;originWidth=478&amp;originalType=binary%E2%88%B6=1&amp;rotation=0&amp;showTitle=false&amp;size=46537&amp;status=done&amp;style=none&amp;taskId=u006087b0-4022-4305-a9e6-fd09e50c050&amp;title=&amp;width=478"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638874891357-f976c955-2ba4-44f8-9150-d011c600ef09.png#clientId=u35dd04ab-9bce-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;height=157&amp;id=uf6cc5abf&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=157&amp;originWidth=633&amp;originalType=binary%E2%88%B6=1&amp;rotation=0&amp;showTitle=false&amp;size=3041&amp;status=done&amp;style=none&amp;taskId=u8bd69484-1301-422f-89cf-ad173b6b1df&amp;title=&amp;width=633"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638877487811-bad544e4-42b5-4530-b9b6-d8a5eb9331b6.png#clientId=u35dd04ab-9bce-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;height=238&amp;id=ud37e340e&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=238&amp;originWidth=711&amp;originalType=binary%E2%88%B6=1&amp;rotation=0&amp;showTitle=false&amp;size=62887&amp;status=done&amp;style=none&amp;taskId=u3094999a-ab91-43ef-bd73-c8afb3de000&amp;title=&amp;width=711"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638878991864-b8cd9f7e-e577-4a09-9f1b-117d109a642a.png#clientId=u35dd04ab-9bce-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;height=363&amp;id=udbffea3a&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=363&amp;originWidth=498&amp;originalType=binary%E2%88%B6=1&amp;rotation=0&amp;showTitle=false&amp;size=98351&amp;status=done&amp;style=none&amp;taskId=u126e8ac7-8a04-4024-814b-bf0f529321a&amp;title=&amp;width=498"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638882803158-348c0a9e-c6e4-4828-9203-73c5f66a6f74.png#clientId=u2c415981-34e0-4&amp;crop=0&amp;crop=0&amp;crop=0.7985&amp;crop=1&amp;from=paste&amp;height=81&amp;id=WkJGd&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=101&amp;originWidth=521&amp;originalType=binary%E2%88%B6=1&amp;rotation=0&amp;showTitle=false&amp;size=2563&amp;status=done&amp;style=none&amp;taskId=u972249cc-1e1a-4a8d-9362-affdbd5fbc0&amp;title=&amp;width=416"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638881855812-a06bc6b2-ed32-4489-ab4f-addce77e3f40.png#clientId=u2c415981-34e0-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;height=240&amp;id=ueff71717&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=240&amp;originWidth=415&amp;originalType=binary%E2%88%B6=1&amp;rotation=0&amp;showTitle=false&amp;size=4176&amp;status=done&amp;style=none&amp;taskId=uc826ef86-9dc3-45dc-8730-8d274ce15cc&amp;title=&amp;width=415"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638971914394-0035e6e5-c13d-49ed-aac1-5c3e238509fc.png#clientId=ub32d6471-46e7-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;height=33&amp;id=u2cd39abf&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=46&amp;originWidth=258&amp;originalType=binary%E2%88%B6=1&amp;rotation=0&amp;showTitle=false&amp;size=927&amp;status=done&amp;style=none&amp;taskId=u5a70dea1-245c-420e-b7cb-313efa535ec&amp;title=&amp;width=184"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/1721297/1639050970725-e1e9ad0c-acf6-4828-a343-f665d96c2385.png#clientId=u5e73ec5c-4c58-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;height=62&amp;id=u12cc280a&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=62&amp;originWidth=277&amp;originalType=binary%E2%88%B6=1&amp;rotation=0&amp;showTitle=false&amp;size=1169&amp;status=done&amp;style=none&amp;taskId=u1c6e2788-9b6c-4fae-b961-c69630e4098&amp;title=&amp;width=277"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/1721297/1639051013140-58e098db-70c5-4065-9813-e37c2b1ccce4.png#clientId=u5e73ec5c-4c58-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;height=449&amp;id=u202e7733&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=592&amp;originWidth=635&amp;originalType=binary%E2%88%B6=1&amp;rotation=0&amp;showTitle=false&amp;size=23054&amp;status=done&amp;style=none&amp;taskId=uc7abb45a-1aa2-43ac-8105-99040893430&amp;title=&amp;width=482"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/1721297/1639060438878-377a86b2-9e51-4bfe-bbb5-f1fcc9d45490.png#clientId=u3d19a69b-ada3-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;height=204&amp;id=ua9f6c95f&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=204&amp;originWidth=800&amp;originalType=binary%E2%88%B6=1&amp;rotation=0&amp;showTitle=false&amp;size=7932&amp;status=done&amp;style=none&amp;taskId=uff368e08-3959-46ec-ad83-e75f3a7aac1&amp;title=&amp;width=800"><meta property="article:published_time" content="2021-12-10T00:11:32.000Z"><meta property="article:modified_time" content="2021-12-10T02:15:22.638Z"><meta property="article:author" content="tou"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638760399749-c4764872-05e4-48e2-b9f7-a0639754f6bf.png#clientId=u46d716d3-dfa1-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;height=186&amp;id=u80c2a6ae&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=321&amp;originWidth=704&amp;originalType=binary%E2%88%B6=1&amp;rotation=0&amp;showTitle=false&amp;size=97560&amp;status=done&amp;style=none&amp;taskId=u9b7311f8-25eb-47a7-b3ac-e2a072b3344&amp;title=&amp;width=407"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://www.toulzx.top/2021/12/10/guide_to_unix_and_linux/"},"headline":"GUIDE TO UNIX AND LINUX","image":[],"datePublished":"2021-12-10T00:11:32.000Z","dateModified":"2021-12-10T02:15:22.638Z","author":{"@type":"Person","name":"tou"},"publisher":{"@type":"Organization","name":"tou's Website","logo":{"@type":"ImageObject","url":{"text":"tou's Website"}}},"description":"本文是一篇读书笔记，主要介绍了 Linux 诞生的相关背景，以及一点点的 Linux 初步使用。我选择性忽略了原书一部分内容，将我认为重要的部分摘录于此。本读书笔记适合有一定 Linux 基础的朋友参考。"}</script><link rel="canonical" href="http://www.toulzx.top/2021/12/10/guide_to_unix_and_linux/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;family=Noto+Sans+SC:wght@400;700"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css"><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">tou&#039;s Website</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/archives">Archives</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-12-10T00:11:32.000Z" title="2021-12-10 8:11:32 ├F10: AM┤">2021-12-10</time>发表</span><span class="level-item"><time dateTime="2021-12-10T02:15:22.638Z" title="2021-12-10 10:15:22 ├F10: AM┤">2021-12-10</time>更新</span><span class="level-item">1 小时读完 (大约10102个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">GUIDE TO UNIX AND LINUX</h1><meta name="referrer" content="no-referrer"><div class="content"><blockquote>
+<p>本文是一篇读书笔记，主要介绍了 Linux 诞生的相关背景，以及一点点的 Linux 初步使用。<br>我选择性忽略了原书一部分内容，将我认为重要的部分摘录于此。<br>本读书笔记适合有一定 Linux 基础的朋友参考。</p>
+</blockquote>
+<span id="more"></span>
+
+<blockquote>
+<p><em>这是一篇语雀副本，用于同步我的个人博客。</em> &gt; <em>^本文目前仅在</em><a target="_blank" rel="noopener" href="https://www.yuque.com/toulzx/website-sync/guide_to_unix_and_linux"><em>语雀</em></a><em>、</em><a target="_blank" rel="noopener" href="https://toulzx.github.io/"><em>个人博客</em></a><em>发布发布，内容为作者 tou 原创，暂不允许全文转载。谢谢！</em></p>
+</blockquote>
+<h1 id="Chapter-1-Summary"><a href="#Chapter-1-Summary" class="headerlink" title="Chapter 1 Summary"></a>Chapter 1 Summary</h1><p>​</p>
+<p>Unix 用起来容易，学起来难。<br>​</p>
+<p>Unix 世界充斥巨量信息，不要试图全方位学习。学习基本知识（本书前 7 章），其它根据兴趣和需求学。<br>​</p>
+<h1 id="Chapter-2-What-is-Linux-Unix"><a href="#Chapter-2-What-is-Linux-Unix" class="headerlink" title="Chapter 2 What is Linux / Unix"></a>Chapter 2 What is Linux / Unix</h1><p>​</p>
+<p>Unix 是一种类型的计算机系统，Linux 是 Unix 系统中一个家族的名称。<br>​</p>
+<h2 id="2-1-什么是操作系统"><a href="#2-1-什么是操作系统" class="headerlink" title="2.1 什么是操作系统"></a>2.1 什么是操作系统</h2><p>一系列指令 = 程序 = 软件 <em>vs 硬件</em>​<br>​</p>
+<p><strong>操作系统是软件，是高效利用计算机硬件的总控制程序。</strong><br>​</p>
+<p>所有 Unix 操作系统都有两个重要特征：</p>
+<ol>
+<li><strong>多任务</strong><ul>
+<li>multitasking，旧称：多道程序设计（multi-programming）</li>
+</ul>
+</li>
+<li><strong>多用户系统</strong><ul>
+<li>multi-user，旧称：分时（time-share）</li>
+</ul>
+</li>
+</ol>
+<p>​</p>
+<p>微软的 Windows 是“多任务、单用户”的操作系统！<br>​</p>
+<p>计算机初始化过程只是<strong>引导（booting）</strong>过程的一部分。<br>​</p>
+<blockquote>
+<p><strong>引导（booting）：</strong>通过自力更生出人头地。<br>此处利用其思想，将一个复杂、困难的目标从一个小动作开始，以其为基础，一步一步到达期望目标。<br>在计算机中，当启动计算机时，一个单独、小型程序的自动运行，这个程序启动另一个更复杂的程序，逐步递进……最终，操作系统（一个非常复杂的程序）接过控制，完成初始化过程。</p>
+</blockquote>
+<p>引导过程的最后一个动作是启动一个非常复杂的程序：<strong>内核（kernel）</strong>。<br>​</p>
+<h2 id="2-2-什么是内核"><a href="#2-2-什么是内核" class="headerlink" title="2.2 什么是内核"></a>2.2 什么是内核</h2><p><strong>內核（kernel）是操作系统的核心。</strong><br>​</p>
+<p>内核基本上可分为两大类：</p>
+<ol>
+<li>单内核（monolithic kernel）：规模庞大的程序，可以完成所有事情。</li>
+<li>微内核（microkernel）：规模小，只能执行基本任务，通过调用服务器（server）完成其它功能。</li>
+</ol>
+<p>​</p>
+<p>内核执行的任务有：</p>
+<ol>
+<li>内存管理（包括分页）</li>
+<li>进程管理</li>
+<li>进程间通信</li>
+<li>输入/输出（通过设备驱动程序实现与物理设备的通信）</li>
+<li>文件管理</li>
+<li>安全和访问控制</li>
+<li>网络访问（TCP/IP）</li>
+</ol>
+<p>​</p>
+<blockquote>
+<p>将 Unix 想象成为一个<strong>坚果</strong>。<br>里面的就是<strong>果仁（kernel）</strong>，外面的就是<strong>壳（shell）</strong>。<br>shell（第 11 章）就是围绕内核周围的一种特殊程序（命令处理器）的名称，它充当用户与系统交互的个人界面。<br>内核之外并不只有 shell，还有其它辅助程序（如图形用户界面 GUI）。</p>
+</blockquote>
+<p>​</p>
+<p>设计操作系统可以选择大型单内核，或使用小型拥有最少服务器的微内核。<br>​</p>
+<p>对于苹果的 OS X 系统来说，它使用的是微内核。微内核采用模块化设计，更易于定制迭代。<br>​</p>
+<h2 id="2-3-Unix-内核-实用工具"><a href="#2-3-Unix-内核-实用工具" class="headerlink" title="2.3 Unix = 内核 + 实用工具"></a>2.3 Unix = 内核 + 实用工具</h2><h2 id="2-4-‘UNIX’-商标的归属"><a href="#2-4-‘UNIX’-商标的归属" class="headerlink" title="2.4 ‘UNIX’ 商标的归属"></a>2.4 ‘UNIX’ 商标的归属</h2><p>原来在 AT&amp;T，现由开放组织（The Open Group）拥有。</p>
+<h2 id="2-5-‘Unix’-现在是通用名称"><a href="#2-5-‘Unix’-现在是通用名称" class="headerlink" title="2.5 ‘Unix’ 现在是通用名称"></a>2.5 ‘Unix’ 现在是通用名称</h2><p>​</p>
+<h2 id="2-6-自由软件基金会（Free-Software-Foundation-FSF-1985）"><a href="#2-6-自由软件基金会（Free-Software-Foundation-FSF-1985）" class="headerlink" title="2.6 自由软件基金会（Free Software Foundation, FSF, 1985）"></a>2.6 自由软件基金会（Free Software Foundation, FSF, 1985）</h2><p>​</p>
+<p>“计算机用户应该能够自由地修改软件以适应自己的需求，并且自由地共享软件，因为帮助他人是基本的社会责任。”<br>​</p>
+<p>可以对服务收费：“谈话免费，但啤酒不免费”。<br>​</p>
+<p>Richard Stallman 从头编写，与 Unix 兼容的操作系统，他称之为 GNU。<br>​</p>
+<blockquote>
+<p>GNU 全称 GNU’s Not Unix<br>这是一个可以套娃的名字：(((GNU’s Not Unix) Not Unix) Not Unix)</p>
+</blockquote>
+<p>​</p>
+<h2 id="2-7-GNU-宣言摘录"><a href="#2-7-GNU-宣言摘录" class="headerlink" title="2.7 GNU 宣言摘录"></a>2.7 GNU 宣言摘录</h2><h2 id="2-8-GPL-和开放源代码软件"><a href="#2-8-GPL-和开放源代码软件" class="headerlink" title="2.8 GPL 和开放源代码软件"></a>2.8 GPL 和开放源代码软件</h2><p>GNU 项目示例：C 编译器（<strong>gcc</strong>）、Unix shell（<strong>Bash</strong>）……<br>​</p>
+<p><strong>非营利版权（Copyleft）</strong>：”Copyleft - all rights reversed”<br>​</p>
+<p><strong>通用公共许可证（general public license, GPL, 1989）</strong>的核心：允许查看源码、修改内容、但不许限制修改后的软件自由，GPL 协议确保新产品也在本协议下发行。<br>​</p>
+<p>开放源代码运动影响深远、意义重大。如果所有开放源代码软件突然消失，那么 Internet 也会在一瞬间消失。因为全球大多数 Web 服务器都是由 Apache 的开放源代码程序运行的。<br>​</p>
+<h2 id="2-9-The-1970s-from-Bell-Labs-to-Berkeley"><a href="#2-9-The-1970s-from-Bell-Labs-to-Berkeley" class="headerlink" title="2.9 The 1970s, from Bell Labs to Berkeley"></a>2.9 The 1970s, from Bell Labs to Berkeley</h2><p>加利福尼亚大学伯克利分校的研究生 Bill Joy 的工作对 Unix 产生深远影响：开发了 vi 编辑器（第 22 章）、C-Shell（第 11-14 章）。<br>​</p>
+<h2 id="2-10-The-1980s-BSD-and-System-V"><a href="#2-10-The-1980s-BSD-and-System-V" class="headerlink" title="2.10 The 1980s, BSD and System V"></a>2.10 The 1980s, BSD and System V</h2><p>​</p>
+<p>美国国防部高级研究计划局（DARPA）给上述伯克利分校的一个大订单：开发一套 Unix 系统以运行在不同类型硬件上的操作系统，由此开发出了 BSD。<br>​</p>
+<p>由于 AT&amp;T 公司想要将 UNIX 变成商业产品销售，BSD 开发者开始替换 BSD 中 UNIX 的组件。<br>​</p>
+<h2 id="2-11-Unix-in-1991-Waiting…"><a href="#2-11-Unix-in-1991-Waiting…" class="headerlink" title="2.11 Unix in 1991: Waiting…"></a>2.11 Unix in 1991: Waiting…</h2><p>​</p>
+<p>自由软件基金会（FSF）已经创建了很多高质量的自由软件：大量 Unix 实用工具和一个 Shell，但是他们还没有一个成型的内核。</p>
+<p>此时，一位名叫 Linus Torvalds 的学生打算开始写一个自己的操作系统内核… just for fun<br>​</p>
+<p>​</p>
+<h2 id="2-12-真命天子-Linus-Torvalds"><a href="#2-12-真命天子-Linus-Torvalds" class="headerlink" title="2.12 真命天子 Linus Torvalds"></a>2.12 真命天子 Linus Torvalds</h2><p>1991 年 9 月，Linus 发行了第一版的内核，称之为 Linux。<br>​</p>
+<p>Linux 采用单内核的设计方式。<br>​</p>
+<p>Linus 是以 GNU GPL 名义发布内核的，这使 Linux 飞快发展和完善。<br>​</p>
+<p>“Given enough eyeballs, all bugs are shallow”<br>​</p>
+<blockquote>
+<p>Linux 并不是 Linus 计划的用名。<br>另一程序员 Ari Lemmke 说服 Linus 将文件上传到自己运营的服务器上，从而可以使编程爱好者更方便的访问文件。在创建目录时， 他将目录命名为了 Linux。</p>
+</blockquote>
+<p>​</p>
+<h2 id="2-13-Linux-发行版"><a href="#2-13-Linux-发行版" class="headerlink" title="2.13 Linux 发行版"></a>2.13 Linux 发行版</h2><p>严格意义上 Linux 是内核。<br>​</p>
+<p>Linux 发行版（distribution，简称 distro）是基于 Linux 内核的操作系统，集成了所需的组件。<br>​</p>
+<p>1993 年 7 月 Patrick Volkerding 发布新的发行版 Slackware，由于维护的好，它非常成功，且时至今日已经发展成为完整的发行版家族。<br>​</p>
+<p>由于大多数 Linux 发行版使用的是 GNU 实用工具，因此 FSF 坚持基于 Linux 的操作系统应该称为 “GNU/Linux”，但就像 “UNIX” 一样，emmm<br>​</p>
+<h2 id="2-14-BSD-发行版"><a href="#2-14-BSD-发行版" class="headerlink" title="2.14 BSD 发行版"></a>2.14 BSD 发行版</h2><p>1992 年 Bill Jolitz 完成最后 6 个内核文件的内容重写，发布 386/BSD，这意味着 BSD 彻底与 AT&amp;T 的 UNIX 无关了。<br>​</p>
+<p>相比于拥有几百个发行版的 Linux，BSD 世界只有 3 个主要的发行版：</p>
+<ol>
+<li>FreeBSD：PC 硬件上操作系统版本</li>
+<li>NetBSD：移植到其他类型计算机</li>
+<li>OpenBSD：主要关注安全和密码学问题</li>
+</ol>
+<p>​</p>
+<p>事实上，大多数 Linux 发行版也使用了大量的 BSD 实用工具。</p>
+<p>为什么 FreeBSD 没有 Linux 这么流行：</p>
+<ol>
+<li>发布时间：Linux 早了一年（1992），解决了当时的燃眉之急（拥有完全开放源代码的操作系统）！</li>
+<li>BSD 许可证没有 GPL 严格：BSD 可以允许出现不共享新产品的情况存在。</li>
+</ol>
+<p>​</p>
+<h2 id="2-15-您应该使用什么类型的-Unix"><a href="#2-15-您应该使用什么类型的-Unix" class="headerlink" title="2.15 您应该使用什么类型的 Unix"></a>2.15 您应该使用什么类型的 Unix</h2><p>不必要必须使用什么类型的 Unix，Unix 就是 Unix，各发行版完全通用。<br>​</p>
+<h2 id="2-16-获取-Linux-或-FreeBSD-的方式"><a href="#2-16-获取-Linux-或-FreeBSD-的方式" class="headerlink" title="2.16 获取 Linux 或 FreeBSD 的方式"></a>2.16 获取 Linux 或 FreeBSD 的方式</h2><h2 id="2-17-What-is-Linux-Unix"><a href="#2-17-What-is-Linux-Unix" class="headerlink" title="2.17 What is Linux / Unix"></a>2.17 What is Linux / Unix</h2><p>​</p>
+<p><strong>Unix = 类 Unix 内核 + 类 Unix 实用工具 + 类 Unix shell</strong><br>​</p>
+<blockquote>
+<p>我们无法准确定义一个“什么才算是类 Unix”的标准，但当你懂 Unix 时，你看到它，就知道它是了。</p>
+</blockquote>
+<p>​</p>
+<p><strong>Linux 是任何使用 Linux 内核的 Unix 的名称。</strong><br>​</p>
+<p>​</p>
+<h1 id="Chapter-3-Unix-connection"><a href="#Chapter-3-Unix-connection" class="headerlink" title="Chapter 3 Unix connection"></a>Chapter 3 Unix connection</h1><h2 id="3-1-计算机-终端-主机"><a href="#3-1-计算机-终端-主机" class="headerlink" title="3.1 计算机 = 终端 + 主机"></a>3.1 计算机 = 终端 + 主机</h2><p>人与机器、机器与机器的交互通过<strong>界面（interface）</strong>实现。<br>​</p>
+<p>在 Unix 中，由<strong>终端（terminal）</strong>提供<strong>界面（interface）</strong>，它有两个主要任务：接受输入和生成输出。在此之外，其它的部件总称为<strong>主机（host）</strong>。<br>​</p>
+<blockquote>
+<p>人类通过眼睛、耳朵、鼻子、屁股和嘴等接受输入，通过四肢、面部肌肉、嘴等生成输出。<br>计算机通过键盘、触摸板、鼠标和麦克风等接受输入，通过扬声器、显示器等生成输出。<br>站在外星人的角度，人的终端和计算机的终端就是通过这些进行界面交互的。</p>
+</blockquote>
+<p>​</p>
+<h2 id="3-2-价格昂贵的早期计算机"><a href="#3-2-价格昂贵的早期计算机" class="headerlink" title="3.2 价格昂贵的早期计算机"></a>3.2 价格昂贵的早期计算机</h2><p>PDP-11，相对便宜的小型计算机。<br>​</p>
+<p>这催生了多任务系统和多用户系统的实现。<br>​</p>
+<h2 id="3-3-多用户的实现：主机和终端的分离"><a href="#3-3-多用户的实现：主机和终端的分离" class="headerlink" title="3.3 多用户的实现：主机和终端的分离"></a>3.3 多用户的实现：主机和终端的分离</h2><p>​</p>
+<p>TeleType，最早 Unix 终端，搭配 PDP-11。<br>​</p>
+<p><strong>Unix 是基于终端和主机这一思想的，终端充当界面，主机进行处理。它们可以彼此分离。</strong><br>​</p>
+<h2 id="3-4-终端室和终端服务器"><a href="#3-4-终端室和终端服务器" class="headerlink" title="3.4 终端室和终端服务器"></a>3.4 终端室和终端服务器</h2><p>多用户系统只需满足：</p>
+<ol>
+<li>每个人拥有自己的终端</li>
+<li>终端与主机连接</li>
+</ol>
+<p>​</p>
+<p>终端室放满终端，每个终端都连接到同（一个）主机。<br>​</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638760399749-c4764872-05e4-48e2-b9f7-a0639754f6bf.png#clientId=u46d716d3-dfa1-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=186&id=u80c2a6ae&margin=%5Bobject%20Object%5D&name=image.png&originHeight=321&originWidth=704&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=97560&status=done&style=none&taskId=u9b7311f8-25eb-47a7-b3ac-e2a072b3344&title=&width=407" alt="image.png"><br>​</p>
+<p><strong>终端服务器（terminal server）</strong>充当交换机的角色，将任意终端连接到任意主机。<br>​</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638760421080-641b1d21-2afc-482b-b64d-1c3518352e42.png#clientId=u46d716d3-dfa1-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=216&id=u11a4c6cb&margin=%5Bobject%20Object%5D&name=image.png&originHeight=348&originWidth=660&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=114969&status=done&style=none&taskId=ua75483dc-0286-4e09-b7de-1d0e0d4f4eb&title=&width=409" alt="image.png"></p>
+<h2 id="3-5-控制台"><a href="#3-5-控制台" class="headerlink" title="3.5 控制台"></a>3.5 控制台</h2><p><strong>控制台（console）</strong>是特殊的终端，这台终端是计算机本身的一部分，它是用来管理系统的。<br>​</p>
+<p>在当下，你使用一台安装 Linux 的笔记本电脑（laptop）时，尽管 Linux 支持多用户，但你就是唯一一位使用该计算机的用户。你就是管理员，也只有一台（内置）终端。在任何时候，当你面对 laptop 时，无论你实际管理系统还是仅在工作，你都在使用控制台。<br>​</p>
+<p>为什么需要区分控制台和普通终端：</p>
+<ol>
+<li>Unix 系统总是区分控制台和普通终端的</li>
+<li>有些事情只能通过控制台完成<ul>
+<li>如系统启动过程遇到的问题只能通过控制台修复，因为在系统启动之后才可以通过远程终端访问系统</li>
+</ul>
+</li>
+<li>一些错误信息的日志会显示在控制台上</li>
+</ol>
+<p>​</p>
+<p>存在没有控制台的计算机（在了解 Unix 和网络后会解释）。<br>​</p>
+<h2 id="3-6-实现-Unix-连接"><a href="#3-6-实现-Unix-连接" class="headerlink" title="3.6 实现 Unix 连接"></a>3.6 实现 Unix 连接</h2><p>​</p>
+<p>终端和主机的距离到底可以多远？无限远。<br>​</p>
+<p>通过局域网（local area network, LAN）和互联网（Internet）即可实现无线连接。<br>​</p>
+<p>只需要打开一个终端窗口并进行远程连接。<br>​</p>
+<h2 id="3-7-没有控制台的主机"><a href="#3-7-没有控制台的主机" class="headerlink" title="3.7 没有控制台的主机"></a>3.7 没有控制台的主机</h2><p>没有控制台的计算机称为<strong>无头系统（headless system）</strong>，它们不需要人类输入，当系统管理员完成工作（配置或修复）后，断开 Unix 主机，使其独立运行，比如：</p>
+<ol>
+<li>Web 服务器、电子邮件服务器等；<ul>
+<li>接收数据（响应请求）和发送数据</li>
+</ul>
+</li>
+<li>路由器；<ul>
+<li>将数据由一个网络中继到另一个网络，在 Internet 上，路由器提供网络之间的真正连接</li>
+</ul>
+</li>
+</ol>
+<p>​</p>
+<p>拥有许多 Unix 服务器的大型公司，将每个主机的控制台连接到一台特殊的终端服务器上，通过这种方式，系统管理院可以使用终端服务器直接登录到有问题的计算机进行处理。<br>​</p>
+<h2 id="3-8-客户端-服务器关系"><a href="#3-8-客户端-服务器关系" class="headerlink" title="3.8 客户端/服务器关系"></a>3.8 客户端/服务器关系</h2><p><strong>服务器（server）</strong>：提供某种类型服务的程序<br>​</p>
+<p><strong>客户端（client）</strong>：使用服务的程序<br>​</p>
+<p>客户端/服务器关系的概念不仅在 Internet 上广泛使用，而且也是 Unix、Microsoft Windows 的重要部分。<br>​</p>
+<p>示例：</p>
+<ol>
+<li>上网：我们通过浏览器（Web 客户端）访问网站（Web 服务器）</li>
+<li>收发电子邮件：使用不同系统<ol>
+<li>发送：使用<strong>简单邮件传输协议（Simple Mail Transport Protocol, SMTP）</strong>的系统，电子邮件程序临时成为 SMTP 客户端，并连接到一个 SMTP 服务器，请求并发送消息。</li>
+<li>接收：使用<strong>邮局协议（Post Office Protocol, POP）</strong>或<strong>消息访问协议（Internet Message Access Protocol, IMAP）</strong>的系统，电子邮件程序临时成为 POP/IMAP 客户端，并连接到一个 POP/IMAP 服务器，询问并接收邮件。</li>
+</ol>
+</li>
+<li>连接远程主机：通过 <strong>SSH（secure shell）</strong>在自己的终端上运行 SSH 客户端，并连接位于主机上的 SSH 服务器。</li>
+<li>向远程计算机上传/下载文件：通过<strong>文件传输协议（File Transfer Protocol, FTP）</strong>的系统，在自己的计算机上运行一个 FTP 客户端，然后连接 FTP 服务器。</li>
+</ol>
+<p><strong>​</strong></p>
+<p><strong>严格意义上，客户端和服务器都是程序，不是机器。但是，非正式的讲，“服务器”也可以指代运行服务器程序的计算机。</strong><br>​</p>
+<h2 id="3-9-按下键盘按键时发生的事情"><a href="#3-9-按下键盘按键时发生的事情" class="headerlink" title="3.9 按下键盘按键时发生的事情"></a>3.9 按下键盘按键时发生的事情</h2><p>键盘和鼠标的操作都不是界面（终端）处理的，而是主机处理完通知界面产生对应变化的。<br>​</p>
+<p>当连接远距离主机时，可能会产生<strong>延迟</strong>（lag）。<br>​</p>
+<p>Unix 的设计目的是让许多不同的终端一起工作，因此操作系统本身统一方式处理按键才有意义，而不是让不同类型的终端以自己的方式处理按键。<br>​</p>
+<h2 id="3-10-字符终端和图形终端"><a href="#3-10-字符终端和图形终端" class="headerlink" title="3.10 字符终端和图形终端"></a>3.10 字符终端和图形终端</h2><p>使用图形终端时，可使用一个成熟的<strong>图形化用户界面（graphical user interface, GUI）</strong>。<br>​</p>
+<p>图形终端一定比字符终端好吗？</p>
+<ul>
+<li>对于 Microsoft Windows 操作系统来说，是的，它的设计就基于 GUI，实际上也依赖于 GUI。</li>
+<li>对于 Unix 并不总是这样，它开发于字符终端时代，所有能力与功能都利用纯文本。事实上，大多数时候，文本就是我们的全部需求。</li>
+</ul>
+<p>​</p>
+<h2 id="3-11-最常见类型的终端"><a href="#3-11-最常见类型的终端" class="headerlink" title="3.11 最常见类型的终端"></a>3.11 最常见类型的终端</h2><p>现在终端的仿真都基于一个古老终端的特征：VT100（1978 年由 DEC 公司生产）。它设计优良，十分流行，为字符终端设立了一个永久的标准。<br>​</p>
+<p>图形终端拥有不同标准，Unix 的 GUI 都基于 X Window 的系统，而 X Window 的基本支持由一个称为 X 终端的图形终端提供。<br>​</p>
+<p>X 终端是图形终端仿真的基础，就如同 VT100 是字符终端仿真的基础一样。<br>​</p>
+<p>为了连接一台远程主机并仿真一个字符终端，可以使用 <code>ssh</code>（secure shell）命令。<br>​</p>
+<p>为了仿真一个 X Window 图形终端，可以使用 <code>ssh-X</code> 命令。<br>​</p>
+<p>​</p>
+<h1 id="Chapter-4-Get-Started-With-Unix"><a href="#Chapter-4-Get-Started-With-Unix" class="headerlink" title="Chapter 4 Get Started With Unix"></a>Chapter 4 Get Started With Unix</h1><h2 id="登录（login）"><a href="#登录（login）" class="headerlink" title="登录（login）"></a>登录（login）</h2><p>​</p>
+<p><strong>系统管理员（admin）</strong><br>​</p>
+<p><strong>用户标识（userid）</strong><br>​</p>
+<p><strong>口令（password）</strong><br>​</p>
+<p><code>&lt;Return&gt;</code> 键是 Unix 一直保留下来的按键，表示结束一行的输入，它来源于最初的打字机。现在我们使用键盘上的 <code>&lt;Enter&gt;</code> 实现类似功能。<br>​</p>
+<p>Microsoft Windows 被设计称大小写不敏感。相比之下，<strong>Unix 区分大小写</strong>，因此用户指令 “tou” 和 “Tou” 不是一回事。此外，对于命令 “logout” （注销命令）也同理（ ≠”Logout” ）。</p>
+<p>password 不会回显，当 userid 不存在的时候，系统也不会提示用户不存在，系统只会返回最终结果： “Login incorrect”.<br>​</p>
+<p>一件奇怪的事情：几乎在所有的 Unix 系统上，登陆程序引导提示（prompt）字符串 “login” 起始字母是小写的，而字符串 “Password” 的起始字母是大写的。<br>​</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638795550828-579470db-6dd3-4531-8005-7f658d57a460.png#clientId=uc68c5472-bfd1-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=193&id=u43756c77&margin=%5Bobject%20Object%5D&name=image.png&originHeight=193&originWidth=436&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=2832&status=done&style=none&taskId=u71845eeb-cdb3-46bf-8e62-73d2dc98faf&title=&width=436" alt="image.png"><br>​</p>
+<h2 id="shell-提示"><a href="#shell-提示" class="headerlink" title="shell 提示"></a>shell 提示</h2><p>​</p>
+<p>当初始化命令结束执行，Unix 将启动 shell 并将控制权交给它。然后 shell 显示 shell 提示，等候你输入命令。<br>​</p>
+<p>三种流行的 shell 和它们的提示符：</p>
+<ol>
+<li>Bash ($)</li>
+<li>C-Shell ($)</li>
+<li>Korn Shell (%)</li>
+</ol>
+<p>​</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638795584161-0c483ff2-13e6-4a34-9850-264bd807f848.png#clientId=uc68c5472-bfd1-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=213&id=u0ea24b0c&margin=%5Bobject%20Object%5D&name=image.png&originHeight=213&originWidth=571&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=4224&status=done&style=none&taskId=ubd271485-4f32-4013-9747-39c5140d41c&title=&width=571" alt="image.png"><br>​</p>
+<p>尝试一些命令：</p>
+<ul>
+<li><code>date</code> : 显示时间和日期，Unix 采用 24 小时制</li>
+<li><code>whoami</code> : 显示你的用户标识</li>
+<li><code>w</code> : 谁登陆了系统在做什么</li>
+<li><code>last + &#123;userid_here&#125;</code> : 最近几次（谁）登录的时间，如不指明 userid 则显示全部信息。</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638795725944-0c1ad486-5e87-46fc-a5cd-dac702c71134.png#clientId=uc68c5472-bfd1-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=182&id=uca7dad88&margin=%5Bobject%20Object%5D&name=image.png&originHeight=182&originWidth=587&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=5106&status=done&style=none&taskId=u8858d6a1-b7a2-4b00-a782-9b6104fca18&title=&width=587" alt="image.png"><br>​</p>
+<p>你可以使用命令 <code>passwd</code> 改变口令（密码）。<br>​</p>
+<h2 id="注销（logout）"><a href="#注销（logout）" class="headerlink" title="注销（logout）"></a>注销（logout）</h2><p>结束使用 Unix：</p>
+<ol>
+<li>使用键盘组合键 <code>&lt;ctrl&gt; + &lt;D&gt;</code> : 发送 eof（end of file）信号，这告诉 shell 不再有数据了，然后 shell 会终止。<ul>
+<li>然而 eof 还有其它用途，这个组合键可能会使用户不小心注销，因此此功能可能会被屏蔽</li>
+</ul>
+</li>
+<li>使用 <code>logout</code> 或 <code>exit</code> 命令。</li>
+</ol>
+<h2 id="root"><a href="#root" class="headerlink" title="root"></a>root</h2><p>root 用户：超级用户，用户标识（userid）为 root，拥有全部权限<br>​</p>
+<p>root 目录：整个 Unix 文件系统的基础<br>​</p>
+<p>即便是管理员，也不会在非必要的时候使用 root 用户。<br>​</p>
+<p>区分 root 用户的一个方法是查看标识符。root 登录后，无论是什么类型的 shell，统一会显示为 “<strong>#</strong>“.</p>
+<h1 id="Chapter-5-GUI-graphic-user-interface"><a href="#Chapter-5-GUI-graphic-user-interface" class="headerlink" title="Chapter 5 GUI: graphic user interface"></a>Chapter 5 GUI: graphic user interface</h1><p>X Window 的介绍略，Unix 主宰之争略。</p>
+<h2 id="抽象层次"><a href="#抽象层次" class="headerlink" title="抽象层次"></a>抽象层次</h2><p>​</p>
+<p>从一开始，X Window 就被设计成 GUI 和硬件之间的标准化界面，就其本身而言还不提供图形化界面。实际上，提供图形化界面的是另一个程序：<strong>窗口管理器（window manager）</strong>，它的抽象层次位于 X Window 之上。<br>​</p>
+<p><strong>桌面环境（desktop environment，有时称桌面管理器）</strong>，其抽象层次位于窗口管理器之上，提供与现代计算机相关的复杂认知任务。<br>​</p>
+<p>比如，在窗口管理器中我们可以处理鼠标的移动、窗口和图标的显示；桌面环境允许我们使用鼠标拖动图标（是桌面环境为拖放思想引入含义）。<br>​</p>
+<p>抽象层次一览：<br><img src="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638798736628-29f19abe-4d79-4190-a264-857c4445ef21.png#clientId=uc68c5472-bfd1-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=148&id=ub9a6713e&margin=%5Bobject%20Object%5D&name=image.png&originHeight=148&originWidth=478&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=46537&status=done&style=none&taskId=u006087b0-4022-4305-a9e6-fd09e50c050&title=&width=478" alt="image.png"></p>
+<p><strong>在特定层次中发生的事情的细节与其它任何层次无关。</strong><br>​</p>
+<p><strong>仅相邻层次通过特定接口进行通信。</strong></p>
+<h2 id="桌面环境"><a href="#桌面环境" class="headerlink" title="桌面环境"></a>桌面环境</h2><p>程序历史演变略。<br>​</p>
+<p>Microsoft Windows 和 Mac OS 努力使人们相信计算机的每个程序都属于操作系统的一部分。<br>​</p>
+<p>但是使用 Unix 时候，你就会看到真实的世界，并不是那样的。<br>​</p>
+<p>常见桌面环境：</p>
+<ul>
+<li>CDE：一般面向商业市场，被公司使用，因为它背后有稳定的技术支持。</li>
+<li>KDE：消费者使用居多，简约有条理</li>
+<li>Gnome：消费者使用居多，遵循“形式追随功能”（”Form ever follows function”, 1896, Louis Sullivan）的原则。</li>
+</ul>
+<p>​</p>
+<p>​</p>
+<h1 id="Chapter-6-working-environment-of-Unix"><a href="#Chapter-6-working-environment-of-Unix" class="headerlink" title="Chapter 6 working environment of Unix"></a>Chapter 6 working environment of Unix</h1><p>从这章开始，将融合前面学习的许多知识，开始以 Unix 本来的方式学习 Unix。<br>​</p>
+<h2 id="多任务处理"><a href="#多任务处理" class="headerlink" title="多任务处理"></a>多任务处理</h2><p>在 Unix 中，我们不谈论程序的执行，而谈论<strong>进程（process）</strong>的执行。<br>​</p>
+<blockquote>
+<p><strong>进程（process）</strong>是装载到内存中准备运行的程序 + 程序的数据 + 跟踪程序状态所需的信息</p>
+</blockquote>
+<blockquote>
+<p>你可以使用 <code>top</code> 命令查看当前系统活跃的进程。</p>
+</blockquote>
+<p>​</p>
+<p>进程的运行需要请求处理器时间。<br>​</p>
+<p>单处理器的计算机一次只能执行一个进程，多处理器的计算机可以处理多个请求，但这仍不可能同一时间服务所有进程。<br>​</p>
+<p>Unix 使用了这样一种系统，允许每个进程轮流使用处理器一段极短的时间的系统，这一段极短的时间称为<strong>时间片（time slice）</strong>。当时间片用完，当前进程就会被挂起，<strong>调度器</strong>（一个特殊的服务）会决定接下来执行哪个进程。<br>​</p>
+<blockquote>
+<p>典型的时间片通常是 10 毫秒（10‰秒）</p>
+</blockquote>
+<p>由于时间片极短、处理器非常快、调度器巧妙地处理了所有事情，因此看起来 Unix 同时处理了多个事情，到此为止，多任务处理的假象就这样产生了。<br>​</p>
+<h2 id="GUI-与-CLI"><a href="#GUI-与-CLI" class="headerlink" title="GUI 与 CLI"></a>GUI 与 CLI</h2><p><strong>GUI = X Window + window manager + desktop environment</strong><br>​</p>
+<p><strong>CLI（command line interface）</strong>，即命令行界面。在这个界面上，shell（命令处理器）显示提示并等候你输入。<br>​</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638874891357-f976c955-2ba4-44f8-9150-d011c600ef09.png#clientId=u35dd04ab-9bce-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=157&id=uf6cc5abf&margin=%5Bobject%20Object%5D&name=image.png&originHeight=157&originWidth=633&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=3041&status=done&style=none&taskId=u8bd69484-1301-422f-89cf-ad173b6b1df&title=&width=633" alt="image.png"></p>
+<p><strong>一般人们交谈的时候，并不总称 CLI，而是习惯称呼其为“命令行”，但事实上，CLI 就是 GUI 的对应物，你需要知道。</strong></p>
+<h2 id="运行级别"><a href="#运行级别" class="headerlink" title="运行级别"></a>运行级别</h2><p>​</p>
+<p>典型的 Linux 运行级别：<br><img src="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638877487811-bad544e4-42b5-4530-b9b6-d8a5eb9331b6.png#clientId=u35dd04ab-9bce-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=238&id=ud37e340e&margin=%5Bobject%20Object%5D&name=image.png&originHeight=238&originWidth=711&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=62887&status=done&style=none&taskId=u3094999a-ab91-43ef-bd73-c8afb3de000&title=&width=711" alt="image.png"></p>
+<p>大多数情况下，Linux 默认引导至级别 3（CLI）或级别 5（GUI），当出现特别严重的问题时，管理员才会调整至级别 1（此时仅允许管理员进行系统维护）。<br>​</p>
+<p>默认引导级别可以自行修改（管理员授权），略。</p>
+<h2 id="学习使用-GUI"><a href="#学习使用-GUI" class="headerlink" title="学习使用 GUI"></a>学习使用 GUI</h2><p>在第 5 章基础上有关 GUI 概念后继续讨论。<br>​</p>
+<h3 id="加速键（accelerator-key）"><a href="#加速键（accelerator-key）" class="headerlink" title="加速键（accelerator key）"></a>加速键（accelerator key）</h3><p>加速键是 GUI 的标准功能，可以快捷地选择菜单、对话框选项，例如：</p>
+<ul>
+<li><code>&lt;alt&gt; + &lt;F&gt;</code> : 显示 File 菜单</li>
+<li><code>&lt;alt&gt; + &lt;E&gt;</code> : 显示 Edit 菜单</li>
+<li><code>&lt;alt&gt; + &lt;H&gt;</code> : 显示 Help 菜单</li>
+</ul>
+<p>​</p>
+<h3 id="多任务"><a href="#多任务" class="headerlink" title="多任务"></a>多任务</h3><p>多任务切换的键盘组合键：</p>
+<ul>
+<li><code>&lt;alt&gt; + &lt;tab&gt;</code> : 顺序</li>
+<li><code>&lt;alt&gt; + &lt;shift&gt; + &lt;tab&gt;</code> : 逆序</li>
+</ul>
+<p>​</p>
+<h3 id="桌面-工作空间"><a href="#桌面-工作空间" class="headerlink" title="桌面/工作空间"></a>桌面/工作空间</h3><p>​</p>
+<p>在 GUI 中，<strong>桌面（desktop）</strong>是基本的工作环境，也称<strong>工作空间（workspace）</strong>。一般而言，桌面环境提供 4 个不同的桌面，你可以使用快捷键切换。（不同 GUI 快捷键不一样）<br>​</p>
+<h3 id="终端仿真器"><a href="#终端仿真器" class="headerlink" title="终端仿真器"></a>终端仿真器</h3><p>​</p>
+<p>在 GUI 调出的“终端”，严格意义上应该叫做“<strong>终端仿真器</strong>”，它不是真正的 Unix CLI。<br>​</p>
+<p>终端仿真器的启动方法通过：</p>
+<ol>
+<li>GUI 中的终端窗口</li>
+<li>虚拟控制台</li>
+</ol>
+<p>​</p>
+<p>终端窗口是访问“终端仿真器”的一种方法，我们打开终端程序，它通过窗口形式出现，而且允许用户打开多个：<br>​</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638878991864-b8cd9f7e-e577-4a09-9f1b-117d109a642a.png#clientId=u35dd04ab-9bce-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=363&id=udbffea3a&margin=%5Bobject%20Object%5D&name=image.png&originHeight=363&originWidth=498&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=98351&status=done&style=none&taskId=u126e8ac7-8a04-4024-814b-bf0f529321a&title=&width=498" alt="image.png"><br>​</p>
+<blockquote>
+<p>当你使用 ssh 程序连接远程服务器时，ssh 程序将充当终端仿真器。</p>
+</blockquote>
+<p>​</p>
+<p>当我们启动 Linux 时，可能默认引导启动 GUI。但实际上，Linux 同时启动了 7 个不同的终端仿真程序，它们就是<strong>虚拟控制台</strong>（这名字容易引起误解，叫做“虚拟终端”会更加合适，后面会说），其中 #7 就是图形终端，用来运行 GUI，所以我们看到的是 #7，而其它 6 个（都是 CLI）都不可见。</p>
+<ul>
+<li>从 #7 GUI 切换到其它 CLI（如第 4 个）的快捷键是 <code>&lt;ctrl&gt; + &lt;alt&gt; + &lt;F4&gt;</code></li>
+<li>从 CLI 切换出去时，可以不用输入 <code>&lt;ctrl&gt;</code>（GUI 中可能会被占用，所以多一个快捷键）</li>
+</ul>
+<p>事实上，虚拟控制台的优势是它占据整个屏幕、显示效果优于窗口，其次，它不依赖于图形化界面，也就是说，当一个终端出现问题崩溃，你可以快速切换到其它终端继续任务或修复。</p>
+<blockquote>
+<p>实际上，FreeBSD 提供 8 台终端。</p>
+</blockquote>
+<p>​</p>
+<blockquote>
+<p><strong>虚拟</strong>：<br>在计算机领域，“虚拟”一词用来描述一些由软件仿真的对象，例如上述的“虚拟控制台”。另一个重要的例子是“虚拟内存”的思想，它利用硬盘存放超量数据的方式来模拟内存。<br>顺便提一嘴，Unix 系统使用虚拟内存。</p>
+</blockquote>
+<p>​</p>
+<h3 id="控制台与终端"><a href="#控制台与终端" class="headerlink" title="控制台与终端"></a>控制台与终端</h3><p>从物理上来说，控制台与其它终端一样。<br>​</p>
+<p>系统管理员用控制台管理程序，因此控制台权限更高，当系统引导至级别 1（单用户模式）时，只有控制台是激活的，通过这种方式，其它用户不能登录系统。<br>​</p>
+<p>现在，<strong>控制台（console）</strong>通常用作<strong>终端（terminal）</strong>的同义词，这是会令人迷惑的一件事情，例如刚刚的“虚拟控制台”，它实际上应该叫做“虚拟终端”，因为它本质上也是软件模拟出来的。<br>​</p>
+<p>包括流行的 Konsole 终端仿真程序（德语中的 console），它运行时，得到的是一个终端窗口，而不是控制台。<br>​</p>
+<h3 id="复制与粘贴"><a href="#复制与粘贴" class="headerlink" title="复制与粘贴"></a>复制与粘贴</h3><p>复制粘贴：<code>&lt;鼠标选中源文字段&gt; + &lt;鼠标定位目标区域&gt; + &lt;鼠标中间键&gt;</code></p>
+<p>在 Linux GUI 中，你可以<strong>使用鼠标选中一段文本，然后在目标区域按中间键</strong>（即我们鼠标的滚轮按钮，有点奇葩是因为 Linux 默认有 3 个键），这就实现了粘贴。<br>​</p>
+<p>复制、剪切、粘贴、撤销等快捷键与 Microsoft Windows 无异。<br>​</p>
+<h2 id="超级用户"><a href="#超级用户" class="headerlink" title="超级用户"></a>超级用户</h2><h3 id="成为超级用户：su"><a href="#成为超级用户：su" class="headerlink" title="成为超级用户：su"></a>成为超级用户：<code>su</code></h3><p>​</p>
+<p>su: substitute userid (读音像 ess-you)<br>​</p>
+<p>成为超级用户的方法：</p>
+<ol>
+<li>登录的时候使用用户标识 root 和对应口令。</li>
+<li>使用命令 <code>su - root</code></li>
+</ol>
+<p>​</p>
+<blockquote>
+<p>注意方法 2 中的连字符！<br><code>su - root</code> 和 <code>su root</code> 有区别：</p>
+<ul>
+<li>共同点：<ul>
+<li>都是 root 用户的权限；</li>
+</ul>
+</li>
+<li>不同点：<ul>
+<li><code>su</code> 仅仅取得 root 权限，工作环境不变，还是在切换之前用户的工作环境（原环境变量）</li>
+<li><code>su - </code> 是完全取得 root 的权限和 root 的工作环境（包括环境变量）</li>
+</ul>
+</li>
+</ul>
+<p>请对比如下两图：</p>
+</blockquote>
+<blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638882803158-348c0a9e-c6e4-4828-9203-73c5f66a6f74.png#clientId=u2c415981-34e0-4&crop=0&crop=0&crop=0.7985&crop=1&from=paste&height=81&id=WkJGd&margin=%5Bobject%20Object%5D&name=image.png&originHeight=101&originWidth=521&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=2563&status=done&style=none&taskId=u972249cc-1e1a-4a8d-9362-affdbd5fbc0&title=&width=416" alt="image.png"></p>
+</blockquote>
+<blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638881855812-a06bc6b2-ed32-4489-ab4f-addce77e3f40.png#clientId=u2c415981-34e0-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=240&id=ueff71717&margin=%5Bobject%20Object%5D&name=image.png&originHeight=240&originWidth=415&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=4176&status=done&style=none&taskId=uc826ef86-9dc3-45dc-8730-8d274ce15cc&title=&width=415" alt="image.png"></p>
+</blockquote>
+<p>事实上，<code>su</code> 命令允许你临时更改用户标识，挂起当前 shell。当你结束后，可通过 <code>exit</code> 命令退出，返回原来的 shell。<br>​</p>
+<h3 id="以超级用户执行-1-条命令：sudo"><a href="#以超级用户执行-1-条命令：sudo" class="headerlink" title="以超级用户执行 1 条命令：sudo"></a>以超级用户执行 1 条命令：<code>sudo</code></h3><p>​</p>
+<p><strong>sudo</strong>: substitute the userid and do something (读音像 pseudo)<br>​</p>
+<p>如果你的用户标识位于一个特殊的列表上（/etc/sudoers，仅被超级用户修改），那么才可允许使用 <code>sudo</code> 命令。这也是为什么当你使用 <code>sudo</code> 命令时，Unix 要求你输入的不是 root 用户的口令而是你自己用户标识的口令。</p>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>使用 <code>less + &#123;路径/文件名&#125;</code> 浏览配置文件，它将展示第一屏的信息。</p>
+<ul>
+<li><code>&lt;Space&gt;</code> : 向前移动</li>
+<li><code>&lt;b&gt;</code> : 向后移动</li>
+<li><code>&lt;h&gt;</code> : 查看帮助（会介绍快捷键使用之类）</li>
+<li><code>&lt;q&gt;</code> : 退出浏览</li>
+</ul>
+<p>​</p>
+<p>一些配置文件和其功能：</p>
+<ul>
+<li>/boot/grub/menu.lst：关于计算机上可以引导的操作系统信息</li>
+<li>/etc/hosts：系统已知的一列主机名称和 IP 地址</li>
+<li>/etc/inittab：不同级别的定义</li>
+<li>/etc/passwd：每个用户标识的基本信息（实际口令加密，保存在其它地方）</li>
+<li>/etc/profile：当一个用户标识登录时，系统自动执行命令</li>
+</ul>
+<p>​</p>
+<h2 id="系统关闭与重启"><a href="#系统关闭与重启" class="headerlink" title="系统关闭与重启"></a>系统关闭与重启</h2><h3 id="命令-init"><a href="#命令-init" class="headerlink" title="命令 init"></a>命令 <code>init</code></h3><p>本质上就是改变运行级别。</p>
+<p>此命令需在超级用户下使用：</p>
+<ul>
+<li><code>sudo init 0</code> : 关机</li>
+<li><code>sudo init 6</code> : 重启</li>
+</ul>
+<p>​</p>
+<p>显然，此命令不是为日常使用而设计的。<br>​</p>
+<h3 id="命令-reboot"><a href="#命令-reboot" class="headerlink" title="命令 reboot"></a>命令 <code>reboot</code></h3><p>​</p>
+<p><code>sudo reboot</code> : 重启，等价于将运行级别切换至 6<br>​</p>
+<h3 id="命令-shutdown"><a href="#命令-shutdown" class="headerlink" title="命令 shutdown"></a>命令 <code>shutdown</code></h3><p><code>sudo shutdown now</code> : 关机，等价于将运行级别切换至 0<br>​</p>
+<p>此命令需指定何时关闭系统。</p>
+<h2 id="查看系统启动日志"><a href="#查看系统启动日志" class="headerlink" title="查看系统启动日志"></a>查看系统启动日志</h2><p>当你登陆后，可以使用 <code>dmesg</code> 查看启动消息。<br>​</p>
+<p>你会发现它一闪而过，内容很多，啥也没看清。此时你可以改变一下它展示的方式：<code>dmesg | less</code>，此时，你就可以像之间介绍的配置文件的查看方式，一页一页查看启动消息。<br>​</p>
+<p>​</p>
+<h1 id="Chapter-7-Keyboard-usage-of-Unix"><a href="#Chapter-7-Keyboard-usage-of-Unix" class="headerlink" title="Chapter 7 Keyboard usage of Unix"></a>Chapter 7 Keyboard usage of Unix</h1><h2 id="Teletype-和-Unix-文化"><a href="#Teletype-和-Unix-文化" class="headerlink" title="Teletype 和 Unix 文化"></a>Teletype 和 Unix 文化</h2><p>最初的终端：Teletype<br>​</p>
+<p>最流行的终端：VT100<br>​</p>
+<p>最初的终端 Teletype 被称为 TTY 并且这一习惯被 Unix 一直保留下来。<br>​</p>
+<p>使用与 TTY 相关命令：</p>
+<ul>
+<li><code>tty</code> : 查看自己的终端名称</li>
+<li><code>stty</code> : “set tty”，显示或改变终端的设置</li>
+<li><code>getty</code> : “get tty”， 打开一个终端通信，并启动登录程序</li>
+</ul>
+<p>​</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/1721297/1638971914394-0035e6e5-c13d-49ed-aac1-5c3e238509fc.png#clientId=ub32d6471-46e7-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=33&id=u2cd39abf&margin=%5Bobject%20Object%5D&name=image.png&originHeight=46&originWidth=258&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=927&status=done&style=none&taskId=u5a70dea1-245c-420e-b7cb-313efa535ec&title=&width=184" alt="image.png"></p>
+<blockquote>
+<p>toulzx：在 centOS 7 中后两条命令似乎没有达到预期目的</p>
+</blockquote>
+<p>​</p>
+<p>显示工作目录（print working directory）命令：<code>pwd</code></p>
+<h2 id="Unix-如何知道所使用的终端类型：环境变量"><a href="#Unix-如何知道所使用的终端类型：环境变量" class="headerlink" title="Unix 如何知道所使用的终端类型：环境变量"></a>Unix 如何知道所使用的终端类型：环境变量</h2><p><code>echo $TERM</code> : 显示当前正在使用的终端的类型<br>​</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/1721297/1639050970725-e1e9ad0c-acf6-4828-a343-f665d96c2385.png#clientId=u5e73ec5c-4c58-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=62&id=u12cc280a&margin=%5Bobject%20Object%5D&name=image.png&originHeight=62&originWidth=277&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=1169&status=done&style=none&taskId=u1c6e2788-9b6c-4fae-b961-c69630e4098&title=&width=277" alt="image.png"><br>​</p>
+<p><code>printenv</code> : 显示环境变量（”print environment variables”）</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/1721297/1639051013140-58e098db-70c5-4065-9813-e37c2b1ccce4.png#clientId=u5e73ec5c-4c58-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=449&id=u202e7733&margin=%5Bobject%20Object%5D&name=image.png&originHeight=592&originWidth=635&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=23054&status=done&style=none&taskId=uc7abb45a-1aa2-43ac-8105-99040893430&title=&width=482" alt="image.png"></p>
+<p>在 Unix 中，环境变量使用大写命名，这是传统惯例。<br>​</p>
+<h2 id="信号和键盘映射"><a href="#信号和键盘映射" class="headerlink" title="信号和键盘映射"></a>信号和键盘映射</h2><p>使用特定信号控制正在运行的程序，例如 intr（interrupt，中断）的信号可以用来终止程序，而使用键盘组合键 <code>&lt;ctrl&gt; + &lt;C&gt;</code> 就可以发送 intr 信号。也就是说，在 Unix 中，<code>&lt;ctrl&gt; + &lt;C&gt;</code> 字符映射到了 intr 信号上，它们等价了。<br>​</p>
+<p>换句话说，你可以使用 <code>&lt;ctrl&gt; + &lt;C&gt;</code> 终止一条需要花费长时间去完成的命令。<br>​</p>
+<p>其它的键盘映射：</p>
+<ul>
+<li>erase：删除最后一个键入的字符，键盘映射为 <code>&lt;Backspace&gt;</code></li>
+<li>werase：删除最后一个键入的单词，键盘映射为 <code>&lt;ctrl&gt; + &lt;W&gt;</code></li>
+<li>kill：删除整行内容，键盘映射为 <code>&lt;ctrl&gt; + &lt;U&gt;</code>（或是 <code>&lt;ctrl&gt; + &lt;X&gt;</code>）</li>
+</ul>
+<p>​</p>
+<p>你可以使用命令 <code>stty -a</code> 显示所有的键映射。<br>​</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/1721297/1639060438878-377a86b2-9e51-4bfe-bbb5-f1fcc9d45490.png#clientId=u3d19a69b-ada3-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=204&id=ua9f6c95f&margin=%5Bobject%20Object%5D&name=image.png&originHeight=204&originWidth=800&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=7932&status=done&style=none&taskId=uff368e08-3959-46ec-ad83-e75f3a7aac1&title=&width=800" alt="image.png"></p>
+<blockquote>
+<p>若你只输入 <code>stty</code>，则默认只显示修改过的键映射。</p>
+</blockquote>
+<blockquote>
+<p>你可能会发现 erase 信号对应的键映射是 <code>^?</code>，这不是表示 <code>&lt;?&gt;</code> 键，而是在（以前）有些键盘上没有 <code>&lt;Backspace&gt;</code> 按键，<code>&lt;Delete&gt;</code> 键是 erase 信号的映射。 <code>^?</code> 用来模糊表示退格键。（这里只是简略描述，详见 7.8 节）</p>
+</blockquote>
+<p>​</p>
+<p>你可以使用 <code>stty &#123;信号名称&#125; &#123;键盘映射&#125;</code> 修改键盘映射，比如：<code>stty kill ^P</code>，这表示将 kill 信号的键盘映射修改为 <code>&lt;ctrl&gt; + &lt;P&gt;</code>。<br>​</p>
+<h2 id="修饰键：-lt-ctrl-gt"><a href="#修饰键：-lt-ctrl-gt" class="headerlink" title="修饰键：&lt;ctrl&gt;"></a>修饰键：<code>&lt;ctrl&gt;</code></h2><p>使用键盘组合键 <code>&lt;ctrl&gt; + &lt;C&gt;</code> 就可以发送 intr 信号，其中 <code>&lt;ctrl&gt; + &lt;C&gt;</code> 的称呼在 Unix 中常用简化标识方法：<code>^C</code>（尖帽子和大写字母的组合）,此后文章中我们使用这种表示方法。<br>​</p>
+<h2 id="其它修饰键"><a href="#其它修饰键" class="headerlink" title="其它修饰键"></a>其它修饰键</h2><p>在标准 PC 键盘上，还有 <code>&lt;shift&gt;</code> 、<code>&lt;alt&gt;</code> 修饰符。前者（shift）主要用于输入大写字母及双字符键中的顶部字符（上面一横排数字对应的字符），后者（alt）是新修饰符，当 Unix 被开发出来的时候，它还没出生… 所以 Unix CLI 中不需要该键，但是，GUI 可能会使用到！<br>​</p>
+<h2 id="停止程序"><a href="#停止程序" class="headerlink" title="停止程序"></a>停止程序</h2><p>使用 <code>^C</code> 发送 intr 信号，终止当前命令的执行。</p>
+<p>一些程序被编程忽略 intr 信号，比如 vi 文本编辑器，这样做能防止误按退出，导致数据丢失。这样设定的程序往往有规定好的退出方式。<br>​</p>
+<p>请区别！当键入一条命令后，intr 取消命令，而 kill 删除命令行上的所有字符。<br>​</p>
+<p>另一种中断当前命令的信号是 quit，它的键盘映射是 <code>^\</code>，其效果与 <code>^C</code> 一致。在以前，它被程序员用来调试使用，因为它会额外生成一份内存副本，保存在<strong>磁芯文件（core file）</strong>中。现在有更好的调试工具了，一般不会这么用了（或：此信号可能不产生磁芯文件了）。<br>​</p>
+<h2 id="暂停显示"><a href="#暂停显示" class="headerlink" title="暂停显示"></a>暂停显示</h2><p>我们之前使用了 <code>dmesg</code> 显示系统启动中的所有消息。但是内容很多，一闪而过。我们使用 <code>dmesg|less</code> 使它每次只展示一页（/屏）内容。现在，我们使用 stop 信号使输出暂停，使用 start 信号使输出继续：</p>
+<ul>
+<li>stop 信号的键盘映射是 <code>^S</code></li>
+<li>start 信号的键盘映射是 <code>^Q</code> （Qontinue，即 continue）</li>
+</ul>
+<p>​</p>
+<blockquote>
+<p>如果你的终端曾经神秘的卡住，可以试试 <code>^Q</code>，它不会造成任何伤害。</p>
+</blockquote>
+<p>​</p>
+<blockquote>
+<p>More：<br>如果你的程序突然暂停，且看到类似 Suspended 或 Stopped 的消息，那么这意味着你可能不小心按下了 <code>^Z</code> 键，它发送 susp（suspend，挂起）信号，程序因此暂停运行。此时你可以输入 fg（foreground，前台）命令重新启动程序。</p>
+</blockquote>
+<p>​</p>
+<h2 id="shell-与-eof-信号"><a href="#shell-与-eof-信号" class="headerlink" title="shell 与 eof 信号"></a>shell 与 eof 信号</h2><p>shell 程序读取 Unix 命令并解释命令。当用户在提示后键入命令并按下 <code>&lt;Return&gt;</code> 键，shell 处理命令，当处理完成，用户会重新接收到 shell 提示。<br>​</p>
+<p>但当发送 eof 信号（end of file，键盘映射为 <code>^D</code>），意味着你告诉 shell 已经没有数据需要再处理了，这回终止 shell 程序，即实现“logout”的功能。<br>​</p>
+<p>你可以设置 shell 从而封闭 eof 信号，略。<br>​</p>
+<h2 id="命令行编辑"><a href="#命令行编辑" class="headerlink" title="命令行编辑"></a>命令行编辑</h2><p>你可以使用 <code>&lt;Left&gt;</code>、<code>&lt;Right&gt;</code> 键移动光标修改特定位置的字符。（这是所谓的“非破坏性退格”，vs <code>&lt;Backspace&gt;</code>）<br>你可以使用 <code>&lt;Up&gt;</code>、<code>&lt;Down&gt;</code> 键快捷显示并输入已运行过的历史命令。<br>​</p>
+<h2 id="返回与换行"><a href="#返回与换行" class="headerlink" title="返回与换行"></a>返回与换行</h2><p>旧时打印机器换行包括两个步骤：</p>
+<ol>
+<li>打印头移到行首（对应 Unix 中 CR 信号）</li>
+<li>打印纸向上移动一行（对应 Unix 中 LF 信号）</li>
+</ol>
+<p>​</p>
+<p>CR 信号的键盘映射是 <code>^M</code>，LF 信号的键盘映射是 <code>^J</code>。<br>​</p>
+<p>一般而言，Unix 中每行文本必须以一个新行字符（^J）结束。<br>​</p>
+<blockquote>
+<p>然而，我们熟悉的 Microsoft Windows 不是这样的，它就是以 “^M^J” 结尾的。<br>所以有时候你复制别人的代码（当他使用的是 Mac，它的系统 OS X 基于 Unix）进入编辑器的时候，编辑器会提示你行尾字符的自动修改。</p>
+</blockquote>
+<p>​</p>
+<p>当按下 <code>&lt;Return&gt;</code> 键的时候，将发送一个返回字符（^M）,Unix 会自动把返回字符修改为新行字符。<br>​</p>
+<p>在终端上显示数据的时候，每一行，必须，以字符序列 “^M^J” 结束，因此，当数据发送到终端时，Unix 再一次将行末的新行字符（^J）修改为返回字符+新行字符。<br>​</p>
+<blockquote>
+<p>因此向终端键入 <code>^J</code> 或者 <code>^M</code> 都能达到换行的效果。</p>
+</blockquote>
+<p>​</p>
+<h2 id="重置"><a href="#重置" class="headerlink" title="重置"></a>重置</h2><p>​</p>
+<p>你可以使用 <code>stty sane</code> 或 <code>reset</code> 命令将终端的设置恢复。<br>​</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>GUIDE TO UNIX AND LINUX</p><p><a href="http://www.toulzx.top/2021/12/10/guide_to_unix_and_linux/">http://www.toulzx.top/2021/12/10/guide_to_unix_and_linux/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>tou</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2021-12-10</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2021-12-10</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/11/19/njupt-cg-opengl/"><span class="level-item">NJUPT-CG-OpenGL</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="https://avatars.githubusercontent.com/u/57480529?v=4" alt="tou"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">tou</p><p class="is-size-6 is-block">Student majoring in CS</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Earth, Solar System</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">5</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">0</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">0</p></a></div></div></nav></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-12-10T00:11:32.000Z">2021-12-10</time></p><p class="title"><a href="/2021/12/10/guide_to_unix_and_linux/">GUIDE TO UNIX AND LINUX</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-11-19T09:58:29.000Z">2021-11-19</time></p><p class="title"><a href="/2021/11/19/njupt-cg-opengl/">NJUPT-CG-OpenGL</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-09-20T05:29:08.000Z">2021-09-20</time></p><p class="title"><a href="/2021/09/20/yuque-hexo-guide/">yuque-hexo 自动化同步： PC &amp; GitHub &amp; Server 的安装与配置</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-09-19T17:12:55.000Z">2021-09-20</time></p><p class="title"><a href="/2021/09/20/yuque-github-hexo/">语雀 + GitHub + Hexo 三端同步的自动化部署博客的搭建</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-09-18T01:56:29.000Z">2021-09-18</time></p><p class="title"><a href="/2021/09/18/test/">Hello World</a></p></div></article></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Chapter-1-Summary"><span class="level-left"><span class="level-item">1</span><span class="level-item">Chapter 1 Summary</span></span></a></li><li><a class="level is-mobile" href="#Chapter-2-What-is-Linux-Unix"><span class="level-left"><span class="level-item">2</span><span class="level-item">Chapter 2 What is Linux / Unix</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#2-1-什么是操作系统"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">2.1 什么是操作系统</span></span></a></li><li><a class="level is-mobile" href="#2-2-什么是内核"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">2.2 什么是内核</span></span></a></li><li><a class="level is-mobile" href="#2-3-Unix-内核-实用工具"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">2.3 Unix = 内核 + 实用工具</span></span></a></li><li><a class="level is-mobile" href="#2-4-‘UNIX’-商标的归属"><span class="level-left"><span class="level-item">2.4</span><span class="level-item">2.4 ‘UNIX’ 商标的归属</span></span></a></li><li><a class="level is-mobile" href="#2-5-‘Unix’-现在是通用名称"><span class="level-left"><span class="level-item">2.5</span><span class="level-item">2.5 ‘Unix’ 现在是通用名称</span></span></a></li><li><a class="level is-mobile" href="#2-6-自由软件基金会（Free-Software-Foundation-FSF-1985）"><span class="level-left"><span class="level-item">2.6</span><span class="level-item">2.6 自由软件基金会（Free Software Foundation, FSF, 1985）</span></span></a></li><li><a class="level is-mobile" href="#2-7-GNU-宣言摘录"><span class="level-left"><span class="level-item">2.7</span><span class="level-item">2.7 GNU 宣言摘录</span></span></a></li><li><a class="level is-mobile" href="#2-8-GPL-和开放源代码软件"><span class="level-left"><span class="level-item">2.8</span><span class="level-item">2.8 GPL 和开放源代码软件</span></span></a></li><li><a class="level is-mobile" href="#2-9-The-1970s-from-Bell-Labs-to-Berkeley"><span class="level-left"><span class="level-item">2.9</span><span class="level-item">2.9 The 1970s, from Bell Labs to Berkeley</span></span></a></li><li><a class="level is-mobile" href="#2-10-The-1980s-BSD-and-System-V"><span class="level-left"><span class="level-item">2.10</span><span class="level-item">2.10 The 1980s, BSD and System V</span></span></a></li><li><a class="level is-mobile" href="#2-11-Unix-in-1991-Waiting…"><span class="level-left"><span class="level-item">2.11</span><span class="level-item">2.11 Unix in 1991: Waiting…</span></span></a></li><li><a class="level is-mobile" href="#2-12-真命天子-Linus-Torvalds"><span class="level-left"><span class="level-item">2.12</span><span class="level-item">2.12 真命天子 Linus Torvalds</span></span></a></li><li><a class="level is-mobile" href="#2-13-Linux-发行版"><span class="level-left"><span class="level-item">2.13</span><span class="level-item">2.13 Linux 发行版</span></span></a></li><li><a class="level is-mobile" href="#2-14-BSD-发行版"><span class="level-left"><span class="level-item">2.14</span><span class="level-item">2.14 BSD 发行版</span></span></a></li><li><a class="level is-mobile" href="#2-15-您应该使用什么类型的-Unix"><span class="level-left"><span class="level-item">2.15</span><span class="level-item">2.15 您应该使用什么类型的 Unix</span></span></a></li><li><a class="level is-mobile" href="#2-16-获取-Linux-或-FreeBSD-的方式"><span class="level-left"><span class="level-item">2.16</span><span class="level-item">2.16 获取 Linux 或 FreeBSD 的方式</span></span></a></li><li><a class="level is-mobile" href="#2-17-What-is-Linux-Unix"><span class="level-left"><span class="level-item">2.17</span><span class="level-item">2.17 What is Linux / Unix</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Chapter-3-Unix-connection"><span class="level-left"><span class="level-item">3</span><span class="level-item">Chapter 3 Unix connection</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#3-1-计算机-终端-主机"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">3.1 计算机 = 终端 + 主机</span></span></a></li><li><a class="level is-mobile" href="#3-2-价格昂贵的早期计算机"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">3.2 价格昂贵的早期计算机</span></span></a></li><li><a class="level is-mobile" href="#3-3-多用户的实现：主机和终端的分离"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">3.3 多用户的实现：主机和终端的分离</span></span></a></li><li><a class="level is-mobile" href="#3-4-终端室和终端服务器"><span class="level-left"><span class="level-item">3.4</span><span class="level-item">3.4 终端室和终端服务器</span></span></a></li><li><a class="level is-mobile" href="#3-5-控制台"><span class="level-left"><span class="level-item">3.5</span><span class="level-item">3.5 控制台</span></span></a></li><li><a class="level is-mobile" href="#3-6-实现-Unix-连接"><span class="level-left"><span class="level-item">3.6</span><span class="level-item">3.6 实现 Unix 连接</span></span></a></li><li><a class="level is-mobile" href="#3-7-没有控制台的主机"><span class="level-left"><span class="level-item">3.7</span><span class="level-item">3.7 没有控制台的主机</span></span></a></li><li><a class="level is-mobile" href="#3-8-客户端-服务器关系"><span class="level-left"><span class="level-item">3.8</span><span class="level-item">3.8 客户端/服务器关系</span></span></a></li><li><a class="level is-mobile" href="#3-9-按下键盘按键时发生的事情"><span class="level-left"><span class="level-item">3.9</span><span class="level-item">3.9 按下键盘按键时发生的事情</span></span></a></li><li><a class="level is-mobile" href="#3-10-字符终端和图形终端"><span class="level-left"><span class="level-item">3.10</span><span class="level-item">3.10 字符终端和图形终端</span></span></a></li><li><a class="level is-mobile" href="#3-11-最常见类型的终端"><span class="level-left"><span class="level-item">3.11</span><span class="level-item">3.11 最常见类型的终端</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Chapter-4-Get-Started-With-Unix"><span class="level-left"><span class="level-item">4</span><span class="level-item">Chapter 4 Get Started With Unix</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#登录（login）"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">登录（login）</span></span></a></li><li><a class="level is-mobile" href="#shell-提示"><span class="level-left"><span class="level-item">4.2</span><span class="level-item">shell 提示</span></span></a></li><li><a class="level is-mobile" href="#注销（logout）"><span class="level-left"><span class="level-item">4.3</span><span class="level-item">注销（logout）</span></span></a></li><li><a class="level is-mobile" href="#root"><span class="level-left"><span class="level-item">4.4</span><span class="level-item">root</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Chapter-5-GUI-graphic-user-interface"><span class="level-left"><span class="level-item">5</span><span class="level-item">Chapter 5 GUI: graphic user interface</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#抽象层次"><span class="level-left"><span class="level-item">5.1</span><span class="level-item">抽象层次</span></span></a></li><li><a class="level is-mobile" href="#桌面环境"><span class="level-left"><span class="level-item">5.2</span><span class="level-item">桌面环境</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Chapter-6-working-environment-of-Unix"><span class="level-left"><span class="level-item">6</span><span class="level-item">Chapter 6 working environment of Unix</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#多任务处理"><span class="level-left"><span class="level-item">6.1</span><span class="level-item">多任务处理</span></span></a></li><li><a class="level is-mobile" href="#GUI-与-CLI"><span class="level-left"><span class="level-item">6.2</span><span class="level-item">GUI 与 CLI</span></span></a></li><li><a class="level is-mobile" href="#运行级别"><span class="level-left"><span class="level-item">6.3</span><span class="level-item">运行级别</span></span></a></li><li><a class="level is-mobile" href="#学习使用-GUI"><span class="level-left"><span class="level-item">6.4</span><span class="level-item">学习使用 GUI</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#加速键（accelerator-key）"><span class="level-left"><span class="level-item">6.4.1</span><span class="level-item">加速键（accelerator key）</span></span></a></li><li><a class="level is-mobile" href="#多任务"><span class="level-left"><span class="level-item">6.4.2</span><span class="level-item">多任务</span></span></a></li><li><a class="level is-mobile" href="#桌面-工作空间"><span class="level-left"><span class="level-item">6.4.3</span><span class="level-item">桌面/工作空间</span></span></a></li><li><a class="level is-mobile" href="#终端仿真器"><span class="level-left"><span class="level-item">6.4.4</span><span class="level-item">终端仿真器</span></span></a></li><li><a class="level is-mobile" href="#控制台与终端"><span class="level-left"><span class="level-item">6.4.5</span><span class="level-item">控制台与终端</span></span></a></li><li><a class="level is-mobile" href="#复制与粘贴"><span class="level-left"><span class="level-item">6.4.6</span><span class="level-item">复制与粘贴</span></span></a></li></ul></li><li><a class="level is-mobile" href="#超级用户"><span class="level-left"><span class="level-item">6.5</span><span class="level-item">超级用户</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#成为超级用户：su"><span class="level-left"><span class="level-item">6.5.1</span><span class="level-item">成为超级用户：su</span></span></a></li><li><a class="level is-mobile" href="#以超级用户执行-1-条命令：sudo"><span class="level-left"><span class="level-item">6.5.2</span><span class="level-item">以超级用户执行 1 条命令：sudo</span></span></a></li></ul></li><li><a class="level is-mobile" href="#配置文件"><span class="level-left"><span class="level-item">6.6</span><span class="level-item">配置文件</span></span></a></li><li><a class="level is-mobile" href="#系统关闭与重启"><span class="level-left"><span class="level-item">6.7</span><span class="level-item">系统关闭与重启</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#命令-init"><span class="level-left"><span class="level-item">6.7.1</span><span class="level-item">命令 init</span></span></a></li><li><a class="level is-mobile" href="#命令-reboot"><span class="level-left"><span class="level-item">6.7.2</span><span class="level-item">命令 reboot</span></span></a></li><li><a class="level is-mobile" href="#命令-shutdown"><span class="level-left"><span class="level-item">6.7.3</span><span class="level-item">命令 shutdown</span></span></a></li></ul></li><li><a class="level is-mobile" href="#查看系统启动日志"><span class="level-left"><span class="level-item">6.8</span><span class="level-item">查看系统启动日志</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Chapter-7-Keyboard-usage-of-Unix"><span class="level-left"><span class="level-item">7</span><span class="level-item">Chapter 7 Keyboard usage of Unix</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Teletype-和-Unix-文化"><span class="level-left"><span class="level-item">7.1</span><span class="level-item">Teletype 和 Unix 文化</span></span></a></li><li><a class="level is-mobile" href="#Unix-如何知道所使用的终端类型：环境变量"><span class="level-left"><span class="level-item">7.2</span><span class="level-item">Unix 如何知道所使用的终端类型：环境变量</span></span></a></li><li><a class="level is-mobile" href="#信号和键盘映射"><span class="level-left"><span class="level-item">7.3</span><span class="level-item">信号和键盘映射</span></span></a></li><li><a class="level is-mobile" href="#修饰键：-lt-ctrl-gt"><span class="level-left"><span class="level-item">7.4</span><span class="level-item">修饰键：&lt;ctrl&gt;</span></span></a></li><li><a class="level is-mobile" href="#其它修饰键"><span class="level-left"><span class="level-item">7.5</span><span class="level-item">其它修饰键</span></span></a></li><li><a class="level is-mobile" href="#停止程序"><span class="level-left"><span class="level-item">7.6</span><span class="level-item">停止程序</span></span></a></li><li><a class="level is-mobile" href="#暂停显示"><span class="level-left"><span class="level-item">7.7</span><span class="level-item">暂停显示</span></span></a></li><li><a class="level is-mobile" href="#shell-与-eof-信号"><span class="level-left"><span class="level-item">7.8</span><span class="level-item">shell 与 eof 信号</span></span></a></li><li><a class="level is-mobile" href="#命令行编辑"><span class="level-left"><span class="level-item">7.9</span><span class="level-item">命令行编辑</span></span></a></li><li><a class="level is-mobile" href="#返回与换行"><span class="level-left"><span class="level-item">7.10</span><span class="level-item">返回与换行</span></span></a></li><li><a class="level is-mobile" href="#重置"><span class="level-left"><span class="level-item">7.11</span><span class="level-item">重置</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">tou&#039;s Website</a><p class="is-size-7"><span>Starting from the Mid-Autumn Festival of 2021</span><br>Powered by <span target="_blank" rel="noopener">Hexo</span> &amp; <span target="_blank" rel="noopener">Icarus</span><br><a href="https://beian.miit.gov.cn/" target="_blank">粤 ICP 备 2020135754 号</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="repo on GitHub" href="https://github.com/toulzx/toulzx.github.io"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><div id="outdated"><h6>Your browser is out-of-date!</h6><p>Update your browser to view this website correctly.&amp;npsb;<a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p><p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p></div><script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script><script>window.addEventListener("load", function () {
+            outdatedBrowser({
+                bgColor: '#f25648',
+                color: '#ffffff',
+                lowerThan: 'object-fit' // display on IE11 or below
+            });
+        });</script><!--!--><script src="/js/main.js" defer></script><script src="/js/custom.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
